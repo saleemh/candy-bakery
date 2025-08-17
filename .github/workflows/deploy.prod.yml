@@ -29,9 +29,19 @@ jobs:
           ssh -o BatchMode=yes ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} \
             'mkdir -p /var/www/saleem.net/projects/candy-bakery'
 
+      - name: Show files to deploy
+        run: |
+          echo "Files to deploy:"
+          find . -type f -not -path "./.git/*" | head -20
+
       - name: Rsync to /var/www/saleem.net/projects/candy-bakery
         run: |
           rsync -avz --delete \
             --exclude ".git/" \
             ./ \
             ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/saleem.net/projects/candy-bakery/
+
+      - name: Verify deployment
+        run: |
+          ssh -o BatchMode=yes ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} \
+            'ls -la /var/www/saleem.net/projects/candy-bakery/ && echo "--- CSS dir ---" && ls -la /var/www/saleem.net/projects/candy-bakery/css/'
