@@ -1,0 +1,140 @@
+:root {
+  --bg: #f8f4ff;
+  --ink: #2b2439;
+  --accent: #ff5ea8;
+  --accent-dark: #e04f95;
+  --gold: #ffcf5a;
+  --mint: #b7f0d3;
+  --sky: #a3d5ff;
+  --grass: #76d36b;
+  --choco: #6b3e26;
+  --cream: #fff5f7;
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Nunito', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, 'Apple Color Emoji', 'Segoe UI Emoji';
+}
+
+.screen { display: none; height: 100dvh; width: 100%; }
+.screen.visible { display: block; }
+
+/* Storefront */
+#screen-storefront { position: relative; overflow: hidden; }
+#screen-storefront .sky {
+  background: linear-gradient(#cfeaff, #fefefe 70%);
+  position: absolute; inset: 0 0 40% 0;
+}
+#screen-storefront .grass {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 35%;
+  background: linear-gradient(0deg, #58b84c, var(--grass));
+}
+.house {
+  position: absolute; left: 50%; top: 52%; transform: translate(-50%, -50%);
+  width: 640px; max-width: 92vw; aspect-ratio: 4/3;
+}
+.house .roof {
+  height: 35%;
+  background: repeating-linear-gradient(120deg, #c86, #c86 10px, #b45 10px, #b45 20px);
+  clip-path: polygon(50% 0, 100% 85%, 0 85%);
+  filter: drop-shadow(0 8px 0 rgba(0,0,0,0.08));
+}
+.house .house-body {
+  position: absolute; inset: 30% 6% 0 6%;
+  background: linear-gradient(180deg, #7e6bff, #6f58f4);
+  border: 6px solid #2a1e55; border-radius: 14px;
+}
+.house .sign {
+  position: absolute; left: 50%; top: 6%; transform: translateX(-50%);
+  background: #ffd7ef; color: #5a2e53; padding: 10px 18px; border-radius: 12px;
+  font-family: 'Baloo 2', cursive; font-weight: 800; font-size: clamp(20px, 3.6vw, 36px);
+  border: 4px solid #5a2e53; box-shadow: 0 6px 0 #5a2e53;
+}
+.house .window { width: 64px; height: 64px; background: linear-gradient(#8ed1ff, #347fc7);
+  border: 6px solid #1b2b4b; position: absolute; top: 28%; border-radius: 6px; }
+.house .window.left { left: 14%; }
+.house .window.right { right: 14%; }
+.house .door { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 90px; height: 120px; background: #6b3e26; border: 6px solid #2a1e55; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; }
+
+.storefront-ui { position: absolute; left: 50%; bottom: 7%; transform: translateX(-50%); text-align: center; }
+.btn { border: 0; padding: 12px 18px; border-radius: 10px; font-weight: 800; cursor: pointer; background: #ece7ff; color: #2b2439; box-shadow: 0 4px 0 rgba(0,0,0,0.15); transition: transform .05s ease, filter .15s ease; }
+.btn:hover { filter: brightness(1.05); }
+.btn:active { transform: translateY(2px); box-shadow: 0 2px 0 rgba(0,0,0,0.2); }
+.btn.primary { background: var(--accent); color: white; box-shadow: 0 6px 0 var(--accent-dark); }
+.btn.success { background: #45c486; color: #072b1f; box-shadow: 0 6px 0 #2e9e68; }
+.hint { margin-top: 10px; opacity: .8 }
+
+/* Game */
+.topbar {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 10px 18px; background: #fff; border-bottom: 2px solid #e8e1ff;
+}
+.brand { font-family: 'Baloo 2', cursive; font-size: 24px; font-weight: 800; }
+.stats { display: flex; gap: 14px; }
+.stat { background: #fff8fb; border: 2px solid #ffd7ef; padding: 6px 10px; border-radius: 10px; font-size: 13px; text-align: center; }
+.stat span { display: block; opacity: .7; }
+.stat strong { font-size: 18px; }
+
+.gameplay { display: grid; grid-template-columns: 1fr 1.2fr; gap: 18px; padding: 16px; max-width: 1100px; margin: 0 auto; }
+.customer-area { background: linear-gradient(180deg, #fff, #fff5f7); border: 2px solid #ffe3f1; border-radius: 16px; padding: 16px; }
+.customer { display: grid; grid-template-columns: 120px 1fr; gap: 12px; align-items: center; }
+.avatar { font-size: 64px; background: #ffe3f1; border: 4px solid #5a2e53; width: 100px; height: 100px; border-radius: 50%; display: grid; place-items: center; }
+.speech { display: grid; gap: 10px; }
+.bubble { background: #fff; border: 2px solid #ddd1ff; padding: 10px 12px; border-radius: 12px; min-height: 54px; font-size: 16px; }
+.thought { display: flex; gap: 6px; align-items: center; min-height: 44px; }
+.thought .pill { padding: 6px 10px; background: #fff; border: 2px dashed #dab3ff; border-radius: 20px; font-weight: 800; font-size: 14px; }
+.patience { margin-top: 8px; grid-column: span 2; height: 10px; background: #f1eaff; border-radius: 6px; overflow: hidden; border: 1px solid #e6daff; }
+.patience .bar { height: 100%; width: 100%; background: linear-gradient(90deg, #61d2a4, #f7d774); transition: width .25s linear; }
+
+.station { background: #fff; border: 2px solid #e9e2ff; border-radius: 16px; padding: 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.tray h3, .bins h3 { margin: 0 0 8px; font-family: 'Baloo 2'; }
+.tray-grid { display: grid; grid-template-columns: repeat(6, 56px); gap: 8px; padding: 12px; background: #fff8fb; border: 2px dashed #ffd7ef; border-radius: 12px; min-height: 80px; }
+.candy-chip { width: 56px; height: 56px; border-radius: 12px; display: grid; place-items: center; font-weight: 900; color: #1a1427; border: 3px solid rgba(0,0,0,.15); cursor: grab; user-select: none; }
+.candy-chip.small { width: 46px; height: 46px; border-width: 2px; }
+.tray-controls { display: flex; justify-content: flex-end; gap: 8px; margin-top: 10px; }
+.bins-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
+.bin { background: #fff; border: 3px solid #2a1e55; border-radius: 14px; padding: 8px; text-align: center; box-shadow: 0 6px 0 rgba(0,0,0,.15); cursor: pointer; }
+.bin .label { font-weight: 800; margin-top: 6px; }
+.bin .example { display: flex; justify-content: center; gap: 4px; margin-top: 4px; }
+
+.bottombar { padding: 12px 18px; text-align: center; color: #4c4373; }
+.message { background: #fff8fb; border: 2px solid #ffd7ef; display: inline-block; padding: 8px 12px; border-radius: 12px; }
+
+/* Summary */
+#screen-summary { display: grid; place-items: center; background: radial-gradient(circle at 50% 30%, #fff0f8, #e9e4ff); }
+.summary-card { background: #fff; padding: 20px; border: 2px solid #e6daff; border-radius: 16px; width: min(720px, 92vw); text-align: center; }
+.summary-card h2 { margin-top: 0; font-family: 'Baloo 2'; font-size: 32px; }
+.summary-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 12px 0 16px; }
+.summary-grid > div { background: #fff8fb; border: 2px solid #ffd7ef; border-radius: 12px; padding: 10px; }
+.summary-grid span { display: block; opacity: .8; }
+.summary-grid strong { font-size: 20px; }
+.summary-actions { display: flex; justify-content: center; gap: 10px; }
+
+/* Candy palettes */
+.c-berry { background: #ff79c6; }
+.c-lemon { background: #fbd24d; }
+.c-lime { background: #78e08f; }
+.c-grape { background: #b084f4; }
+.c-blue { background: #74c0fc; }
+.c-choco { background: #c07a4b; }
+.c-vanilla { background: #fff0d1; }
+.c-cola { background: #6b3e26; color: #fff; }
+.c-bubblegum { background: #ff8fb3; }
+.c-mint { background: #b7f0d3; }
+
+.hidden { display: none !important; }
+
+@media (max-width: 980px) {
+  .gameplay { grid-template-columns: 1fr; }
+  .station { grid-template-columns: 1fr; }
+  .bins-grid { grid-template-columns: repeat(4, 1fr); }
+  .tray-grid { grid-template-columns: repeat(6, 48px); }
+  .candy-chip { width: 48px; height: 48px; }
+}
+
+

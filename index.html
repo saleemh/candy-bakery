@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Candy Bakery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;800&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div id="app">
+    <!-- Storefront (title) screen -->
+    <section id="screen-storefront" class="screen visible">
+      <div class="sky"></div>
+      <div class="grass"></div>
+      <div class="house">
+        <div class="roof"></div>
+        <div class="house-body">
+          <div class="window left"></div>
+          <div class="sign">Candy Bakery</div>
+          <div class="window right"></div>
+          <div class="door"></div>
+        </div>
+      </div>
+      <div class="storefront-ui">
+        <button id="btn-start" class="btn primary">Start Day</button>
+        <p class="hint">Serve the candy combos quickly and accurately for the best tips!</p>
+      </div>
+    </section>
+
+    <!-- Game screen -->
+    <section id="screen-game" class="screen">
+      <header class="topbar">
+        <div class="brand">🍬 Candy Bakery</div>
+        <div class="stats">
+          <div class="stat"><span>Day</span><strong id="label-day">1</strong></div>
+          <div class="stat"><span>Time</span><strong id="label-time">2:00</strong></div>
+          <div class="stat"><span>Coins</span><strong id="label-coins">0</strong></div>
+        </div>
+      </header>
+
+      <main class="gameplay">
+        <section class="customer-area">
+          <div class="customer" id="customer">
+            <div class="avatar" id="customer-avatar">🙂</div>
+            <div class="speech">
+              <div class="bubble" id="order-text">I would like some candy!</div>
+              <div class="thought" id="order-visual"></div>
+            </div>
+            <div class="patience">
+              <div class="bar" id="patience-bar"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="station">
+          <div class="tray">
+            <h3>Assembly Tray</h3>
+            <div id="tray-grid" class="tray-grid"></div>
+            <div class="tray-controls">
+              <button id="btn-undo" class="btn">Undo</button>
+              <button id="btn-clear" class="btn">Clear</button>
+              <button id="btn-serve" class="btn success">Serve ➤</button>
+            </div>
+          </div>
+
+          <div class="bins">
+            <h3>Bins</h3>
+            <div id="bins-grid" class="bins-grid"></div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="bottombar">
+        <div class="message" id="message">Welcome! Click a bin to add candy to the tray. Serve when ready.</div>
+      </footer>
+    </section>
+
+    <!-- End of day screen -->
+    <section id="screen-summary" class="screen">
+      <div class="summary-card">
+        <h2>Day <span id="summary-day">1</span> Complete!</h2>
+        <div class="summary-grid">
+          <div><span>Customers served</span><strong id="summary-served">0</strong></div>
+          <div><span>Perfect orders</span><strong id="summary-perfect">0</strong></div>
+          <div><span>Mixed/ok orders</span><strong id="summary-ok">0</strong></div>
+          <div><span>Failed orders</span><strong id="summary-failed">0</strong></div>
+          <div><span>Coins earned</span><strong id="summary-coins">0</strong></div>
+        </div>
+        <div class="summary-actions">
+          <button id="btn-next-day" class="btn primary">Next Day ▶</button>
+          <button id="btn-restart" class="btn">Restart</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="js/game.js"></script>
+</body>
+  
+</html>
+
+
