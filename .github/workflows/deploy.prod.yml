@@ -1,8 +1,8 @@
 name: Deploy PRODUCTION (candy-bakery)
 on:
   push:
-    tags: 
-        - 'v*'
+    tags:
+      - 'v*'
 
 jobs:
   deploy:
