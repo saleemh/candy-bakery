@@ -27,8 +27,7 @@ jobs:
       - name: Prepare target dir
         run: |
           ssh -o BatchMode=yes ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} \
-            'mkdir -p /var/www/saleem.net/projects/candy-bakery && \
-             chown -R deploy:www-data /var/www/saleem.net/projects/candy-bakery'
+            'mkdir -p /var/www/saleem.net/projects/candy-bakery'
 
       - name: Rsync to /var/www/saleem.net/projects/candy-bakery
         run: |
