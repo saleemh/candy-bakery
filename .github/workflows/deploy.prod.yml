@@ -1,0 +1,38 @@
+name: Deploy PRODUCTION (candy-bakery)
+on:
+  push:
+    tags: 
+        - 'v*'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # (Optional) build step if you add one later
+
+      - uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.VPS_SSH_KEY }}
+
+      - name: Add host keys
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -T 15 -H saleem.net >> ~/.ssh/known_hosts
+          ssh-keyscan -T 15 -H 72.167.41.196 >> ~/.ssh/known_hosts
+          # If you use IPv6/AAAA too, add: ssh-keyscan -T 15 -H [your IPv6] >> ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+
+      - name: Prepare target dir
+        run: |
+          ssh -o BatchMode=yes ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} \
+            'mkdir -p /var/www/saleem.net/projects/candy-bakery && \
+             chown -R deploy:www-data /var/www/saleem.net/projects/candy-bakery'
+
+      - name: Rsync to /var/www/saleem.net/projects/candy-bakery
+        run: |
+          rsync -avz --delete \
+            --exclude ".git/" \
+            ./ \
+            ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/saleem.net/projects/candy-bakery/
