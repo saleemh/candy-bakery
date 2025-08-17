@@ -79,6 +79,7 @@ body {
 .stat { background: #fff8fb; border: 2px solid #ffd7ef; padding: 6px 10px; border-radius: 10px; font-size: 13px; text-align: center; }
 .stat span { display: block; opacity: .7; }
 .stat strong { font-size: 18px; }
+.stats .btn { margin-left: 8px; }
 
 .gameplay { display: grid; grid-template-columns: 1fr 1.2fr; gap: 18px; padding: 16px; max-width: 1100px; margin: 0 auto; }
 .customer-area { background: linear-gradient(180deg, #fff, #fff5f7); border: 2px solid #ffe3f1; border-radius: 16px; padding: 16px; }
@@ -126,6 +127,16 @@ body {
 .c-cola { background: #6b3e26; color: #fff; }
 .c-bubblegum { background: #ff8fb3; }
 .c-mint { background: #b7f0d3; }
+/* cakes */
+.c-cake-vanilla { background: #f9e3b1; }
+.c-cake-chocolate { background: #7b4b36; color: #fff; }
+.c-cake-redvelvet { background: #b43b3b; color: #fff; }
+.c-frosting-vanilla { background: #fff5eb; }
+.c-frosting-chocolate { background: #5a3628; color: #fff; }
+.c-frosting-strawberry { background: #ffb1c9; }
+.c-topping-sprinkles { background: repeating-linear-gradient(45deg,#ff8fb3 0 6px,#74c0fc 6px 12px,#fbd24d 12px 18px,#78e08f 18px 24px); color:#1a1427; }
+.c-topping-cherry { background: #ff577a; color:#fff; }
+.c-topping-chocochips { background: #c07a4b; }
 
 .hidden { display: none !important; }
 

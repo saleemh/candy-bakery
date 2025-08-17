@@ -24,6 +24,16 @@
     { id: "cola",    name: "Cola Chew",     colorClass: "c-cola",      emoji: "🥤" },
     { id: "gum",     name: "Bubble Gum",    colorClass: "c-bubblegum", emoji: "🍬" },
     { id: "mint",    name: "Mint Leaf",     colorClass: "c-mint",      emoji: "🌿" },
+    // Cakes and toppings
+    { id: "cake_vanilla",  name: "Vanilla Cake",     colorClass: "c-cake-vanilla",  emoji: "🍰" },
+    { id: "cake_chocolate",name: "Chocolate Cake",   colorClass: "c-cake-chocolate",emoji: "🍰" },
+    { id: "cake_redvelvet",name: "Red Velvet Cake",  colorClass: "c-cake-redvelvet",emoji: "🍰" },
+    { id: "frost_vanilla", name: "Vanilla Frosting", colorClass: "c-frosting-vanilla", emoji: "🧁" },
+    { id: "frost_choco",   name: "Chocolate Frosting", colorClass: "c-frosting-chocolate", emoji: "🧁" },
+    { id: "frost_straw",   name: "Strawberry Frosting", colorClass: "c-frosting-strawberry", emoji: "🧁" },
+    { id: "top_sprinkles", name: "Rainbow Sprinkles", colorClass: "c-topping-sprinkles", emoji: "✨" },
+    { id: "top_cherry",    name: "Cherry",             colorClass: "c-topping-cherry", emoji: "🍒" },
+    { id: "top_chocochips",name: "Choco Chips",        colorClass: "c-topping-chocochips", emoji: "🍫" },
   ];
 
   const GAME_CONFIG = {
@@ -47,10 +57,12 @@
     tray: [], // array of candy ids
     currentOrder: null,
     currentPatience: GAME_CONFIG.patienceSeconds,
+    paused: false,
+    pendingNextCustomer: false,
     timers: {
       day: null,
       patience: null,
-      spawn: null,
+      spawnTimeout: null,
     },
   };
 
@@ -288,9 +300,19 @@
     state.currentOrder = null;
     state.tray = [];
     renderTray();
-    // Short delay then spawn next
+    // Short delay then spawn next (unless paused)
     clearInterval(state.timers.patience);
-    setTimeout(() => {
+    scheduleNextCustomer();
+  }
+
+  function scheduleNextCustomer() {
+    clearTimeout(state.timers.spawnTimeout);
+    if (state.paused) {
+      state.pendingNextCustomer = true;
+      return;
+    }
+    state.pendingNextCustomer = false;
+    state.timers.spawnTimeout = setTimeout(() => {
       nextCustomer();
       clearInterval(state.timers.patience);
       state.timers.patience = setInterval(tickPatience, 1000);
@@ -301,6 +323,7 @@
     state.timeLeft = GAME_CONFIG.dayLengthSeconds;
     state.coins = 0;
     state.served = 0; state.perfect = 0; state.ok = 0; state.failed = 0;
+    state.paused = false; state.pendingNextCustomer = false;
     updateHud();
     setScreen("#screen-game");
     setupBins();
@@ -344,6 +367,35 @@
     setScreen("#screen-storefront");
   }
 
+  function setPaused(paused) {
+    state.paused = paused;
+    const btn = document.querySelector("#btn-pause");
+    if (paused) {
+      btn.textContent = "Resume";
+      showMessage("Paused. You can keep assembling on the tray.");
+      clearInterval(state.timers.day);
+      clearInterval(state.timers.patience);
+      clearTimeout(state.timers.spawnTimeout);
+    } else {
+      btn.textContent = "Pause";
+      showMessage("Back to baking!");
+      // Resume day timer
+      clearInterval(state.timers.day);
+      state.timers.day = setInterval(() => {
+        state.timeLeft -= 1;
+        updateHud();
+        if (state.timeLeft <= 0) endDay();
+      }, 1000);
+      // Resume patience or spawn if pending
+      if (state.pendingNextCustomer || !state.currentOrder) {
+        scheduleNextCustomer();
+      } else {
+        clearInterval(state.timers.patience);
+        state.timers.patience = setInterval(tickPatience, 1000);
+      }
+    }
+  }
+
   // ------------- Events -------------
   function wireUi() {
     $("#btn-start").addEventListener("click", startDay);
@@ -352,10 +404,12 @@
     $("#btn-clear").addEventListener("click", clearTray);
     $("#btn-undo").addEventListener("click", undoTray);
     $("#btn-serve").addEventListener("click", serveTray);
+    $("#btn-pause").addEventListener("click", () => setPaused(!state.paused));
 
     // Simple keyboard shortcuts for speed
     window.addEventListener("keydown", (e) => {
       if (!$("#screen-game").classList.contains("visible")) return;
+      if (e.key.toLowerCase() === "p") { setPaused(!state.paused); return; }
       if (e.key === "Enter") serveTray();
       if (e.key === "Backspace") undoTray();
       if (e.key.toLowerCase() === "c") clearTray();
